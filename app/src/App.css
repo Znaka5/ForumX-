@@ -294,6 +294,122 @@
  /* About info */
 
  .information {
-    color: #fd8a06;
-    font-size: large;
+     color: #fd8a06;
+     font-size: large;
+ }
+
+ /* Posts box */
+
+ .post-box {
+     background: #0f0f0f;
+     color: white;
+     padding: 15px 25px;
+     border-radius: 10px;
+     font-size: 20px;
+     font-weight: 500;
+     text-decoration: none;
+     transition: all 0.3s ease-in-out;
+     margin: 20px 350px 200px;
+ }
+
+ /* Search form */
+
+ .search-form {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     gap: 10px;
+     background: #1e1e1e;
+     padding: 15px;
+     border-radius: 10px;
+     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+     width: 50%;
+     margin: 20px auto;
+ }
+
+ /* Search input */
+
+ .search-input,
+
+ .search-select {
+     padding: 10px;
+     border: none;
+     border-radius: 5px;
+     font-size: 16px;
+     background: #333;
+     color: white;
+     width: 500px;
+     transition: all 0.3s ease-in-out;
+ }
+
+ .search-input:focus,
+ .search-select:focus {
+     outline: none;
+     border: 1px solid #ff9800;
+ }
+
+ /* Search button */
+
+ .search-button {
+     padding: 10px 15px;
+     border: none;
+     background: #ff9800;
+     color: white;
+     font-size: 16px;
+     border-radius: 5px;
+     cursor: pointer;
+     transition: all 0.3s ease-in-out;
+ }
+
+ .search-button:hover {
+     background: #e64a19;
+     color: #333;
+     transform: scale(1.05);
+ }
+
+ @media (max-width: 768px) {
+     .search-form {
+         flex-direction: column;
+         width: 90%;
+     }
+ }
+
+ /* Home link */
+
+ .home-link {
+     color: #fd8a06;
+ }
+
+ .home-link:hover {
+     color: #e64a19;
+ }
+
+ /* Random box */
+
+ .random-box {
+     background: #0f0f0f;
+     color: white;
+     padding: 15px 25px;
+     border-radius: 10px;
+     font-size: 20px;
+     font-weight: 500;
+     text-decoration: none;
+     transition: all 0.3s ease-in-out;
+     margin: 20px 600px 100px;
+ }
+
+ /* Random-pfp */
+
+ .user-pfp-random img {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 0 auto 10px;
+ }
+
+ /* 404 page */
+
+ .not-found {
+    margin: 20px 600px 100px;
+    font-size: larger;
  }

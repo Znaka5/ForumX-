@@ -18,7 +18,7 @@ export default function Header() {
                     <h2>Explore Boards</h2>
                     <div className="board-list">
                         <a href="/boards" className="board">All boards</a>
-                        <a href="/boards/random" className="board">Random</a>
+                        <a href="/boards/random/:id" className="board">Random</a>
                         <a href="/boards/about" className="board">About us</a>
                     </div>
                 </section>

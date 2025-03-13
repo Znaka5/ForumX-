@@ -9,7 +9,7 @@ export default function Register() {
                     <input type="password" name="password" placeholder="Password" />
                     <button type="submit">Register</button>
                 </form>
-                <h3>Or login if you have an account <a href="/users/login">login</a> </h3>
+                <h3>Or login if you have an account <a href="/users/login" className="home-link">login</a></h3>
             </div>
         </section>
     </>)

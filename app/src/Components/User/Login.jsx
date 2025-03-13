@@ -9,7 +9,7 @@ export default function Login() {
                     <input type="password" name="password" placeholder="Password" />
                     <button type="submit">Login</button>
                 </form>
-                <h3>Or login if you don't have an account: <a href="/users/register">Register</a> </h3>
+                <h3>Or login if you don't have an account: <a href="/users/register" className="home-link">Register</a> </h3>
             </div>
         </section>
     </>)
