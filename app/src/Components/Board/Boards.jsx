@@ -1,6 +1,17 @@
+import { useEffect, useState } from "react";
 import Search from "./Search";
 
 export default function Boards() {
+    const [boards, setBoards] = useState([])
+
+    useEffect(() => {
+        fetch("http://localhost:5000/boards/board")
+            .then(response => console.log(response))
+            .then(data => setBoards(data.message))
+            .catch(error => console.log(error.message))
+    }, [])
+
+    console.log(boards)
     return (<>
         <div className="post-box">
             <Search />
@@ -11,19 +22,13 @@ export default function Boards() {
                     <div className="board">
                         <h2>is it that bad i like milfs?</h2>
                         <p>@bucket98</p>
-                        <p1>upvotes: 20</p1>
-                        <a className="details-button" href="/boards/:id/details">Details</a>
-                    </div>
-                    <div className="board">
-                        <h2>What is an Arg?</h2>
-                        <p>@Znaka5</p>
-                        <p1>upvotes: 10</p1>
+                        <p>upvotes: 20</p>
                         <a className="details-button" href="/boards/:id/details">Details</a>
                     </div>
                 </div>
             </section>
 
             <p>tired of "boarding" go back to home page <a href="/" className="home-link">Home</a></p>
-            </div>
+        </div>
     </>)
 }

@@ -9,9 +9,11 @@ export default function Header() {
                 </div>
                 <h1>ForumX</h1>
                 <nav>
+                    <a href="/boards/create">Create</a>
                     <a href="/users/profile">Profile</a>
                     <a href="/users/register">Register</a>
                     <a href="/users/login">Login</a>
+                    <a href="/users/logout">logout</a>
                 </nav>
 
                 <section className="boards">

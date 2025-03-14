@@ -9,7 +9,7 @@ export default function Random() {
                     <div className="board">
                         <h2>is it that bad i like milfs?</h2>
                         <p>@bucket98</p>
-                        <p1>upvotes: 20</p1>
+                        <p>upvotes: 20</p>
                     </div>
                 </div>
             </section>
