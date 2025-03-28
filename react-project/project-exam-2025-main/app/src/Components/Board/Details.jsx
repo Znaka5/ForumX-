@@ -1,7 +1,7 @@
 
 import Comments from "./Comments";
 
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { useState, useEffect } from "react";
 
 export default function Details({
@@ -115,6 +115,41 @@ export default function Details({
         navigate(`/boards/${id}/edit`)
     }
 
+    const like = async (ID) => {
+        const response = await fetch(`http://localhost:5000/boards/${ID}/comments-like`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId: User._id })
+        })
+
+        const Comments = await response.json()
+
+        if (Comments.recievedData !== "error") {
+            setComments(Comments.recievedData)
+        } else {
+            console.log(comments.recievedData)
+        }
+    }
+
+    const DeleteComment = async (ID) => {
+        const response = await fetch(`http://localhost:5000/boards/${ID}/comments-delete`)
+
+        const Comments = await response.json()
+
+        if (Comments.recievedData !== "error") {
+            setComments(Comments.recievedData)
+        } else {
+            console.log(comments.recievedData)
+        }
+    }
+
+    const editComment = async (ID) => {
+        navigate(`/boards/${ID}/edit-comment`)
+    }
+
+
     return (<>
         <div className="random-box">
             <section>
@@ -148,8 +183,33 @@ export default function Details({
                             <img src={comment.imgUrl} alt={comment.owner}></img>
                         </div>
                         <h2>{comment.owner}</h2>
-                        {User && User._id !== comment.owner && <button className="home-link">like</button>}
+                        <p>Likes: {comment.likes} </p>
+
                         <p>{comment.message}</p>
+
+                        {User && User.username !== comment.owner && !comment.liked.includes(User._id) && <button className="home-link"
+                            onClick={
+                                (ev) => {
+                                    ev.preventDefault()
+
+                                    like(comment._id)
+                                }}>like</button>}
+
+
+                        <div>
+                            {User && User.username === comment.owner && <button className="comment-link" onClick={
+                               (ev) => {
+                                ev.preventDefault()
+
+                                editComment(comment._id)
+                            } }>Edit</button>}
+                            {User && User.username === comment.owner && <button className="comment-link" onClick={
+                                (ev) => {
+                                    ev.preventDefault()
+
+                                    DeleteComment(comment._id)
+                                }}>Delete</button>}
+                        </div>
                     </div>)}
             </section>
 

@@ -37,7 +37,6 @@ export default function Header({
                 <nav>
                     {token && <Link to="/users/create">Create</Link>}
                     {token && <Link to="/users/profile">Profile</Link>}
-                    {token && <Link to="/users/settings">Settings</Link>}
                     {token === null && <Link to="/users/register">Register</Link>}
                     {token === null && <Link to="/users/login">Login</Link>}
                     {token && <Link onClick={onLogout}>logout</Link>}

@@ -13,8 +13,16 @@ boardController.get("/board", async function (req, res) {
     res.json({ message: boards })
 })
 
-boardController.get("/comments", async function (req, res) {
-    const comments = await Comment.find({}).lean()
+boardController.get("/:id/comment", async function (req, res) {
+    const id = new Types.ObjectId(req.params.id)
+
+    const comments = await Comment.findOne({ _id: id })
+
+    res.json({ message: comments })
+})
+
+boardController.get("/comment", async function (req, res) {
+    const comments = await Comment.find({})
 
     res.json({ message: comments })
 })
@@ -23,6 +31,8 @@ boardController.post("/comments", async function (req, res) {
     let userData = req.body
 
     userData.post_id = new Types.ObjectId(userData.post_id)
+    userData.likes = 0
+    userData.liked = []
 
     try {
         const data = await Comment.create(userData)
@@ -33,6 +43,79 @@ boardController.post("/comments", async function (req, res) {
         await Boards.updateOne({ _id: userData.post_id }, board)
 
         res.json({ satus: 200, recievedData: data })
+    } catch (err) {
+        res.json({ status: 400, recievedData: "error" })
+    }
+})
+
+boardController.post("/:id/comments-like", async function (req, res) {
+    const id = new Types.ObjectId(req.params.id)
+    const { userId } = req.body
+
+    try {
+        let data = await Comment.findOne({ _id: id })
+        data.likes = data.likes + 1
+        data.liked.push(userId)
+
+        let board = await Boards.findOne({ _id: data.post_id })
+
+        let index = board.comments.findIndex(obj => obj._id === data._id)
+        board.comments.splice(index, 1, data)
+
+        await Boards.updateOne({ _id: data.post_id }, board)
+        await Comment.updateOne({ _id: data._id }, data)
+
+        const comments = await Comment.find({})
+
+        res.json({ satus: 200, recievedData: comments })
+    } catch (err) {
+        res.json({ status: 400, recievedData: "error" })
+    }
+})
+
+boardController.post("/:id/comment-edit", async function (req, res) {
+    const id = new Types.ObjectId(req.params.id)
+    const message = req.body
+
+    if (message.message === "") {
+        return res.json({ status: 400, recievedData: "error", message: "Cannot have empty message" })
+    }
+
+    try {
+        let data = await Comment.findOne({ _id: id })
+        data.message = message.message
+
+        let board = await Boards.findOne({ _id: data.post_id })
+
+        let index = board.comments.findIndex(obj => obj._id.equals(data._id))
+        let comment = board.comments[index]
+        comment.message = data.message
+
+        await Boards.updateOne({ _id: data.post_id }, board)
+        await Comment.updateOne({ _id: data._id }, data)
+
+        res.json({ satus: 200, recievedData: board })
+    } catch (err) {
+        res.json({ status: 400, recievedData: "error", message: "Some error has occured" })
+    }
+})
+
+boardController.get("/:id/comments-delete", async function (req, res) {
+    const id = new Types.ObjectId(req.params.id)
+
+    try {
+        let data = await Comment.findOne({ _id: id })
+        let board = await Boards.findOne({ _id: data.post_id })
+
+        let index = board.comments.findIndex(obj => obj._id === data._id)
+        board.comments.splice(index, 1)
+
+        await Boards.updateOne({ _id: data.post_id }, board)
+        await Comment.deleteOne({ _id: data._id }, data)
+
+        const comments = await Comment.find({})
+
+        res.json({ satus: 200, recievedData: comments })
     } catch (err) {
         res.json({ status: 400, recievedData: "error" })
     }
@@ -97,37 +180,42 @@ boardController.post("/:id/edit", async function (req, res) {
     let boardData = req.body
 
     if (boardData.title === "") {
-        return res.json({ statu: 400, recievedData: "error", message: "title must be filled" })
+        return res.json({ status: 400, recievedData: "error", message: "title must be filled" })
     }
 
     try {
         await Boards.updateOne({ _id: id }, boardData)
 
-        res.json({ statu: 201 })
+        res.json({ status: 201 })
     } catch (err) {
-        res.json({ statu: 400, recievedData: "error", message: "error updating" })
+        res.json({ status: 400, recievedData: "error", message: "error updating" })
     }
 })
 
-// //and this
-// boardController.post("/search", async function (req, res) {
-//     const query = req.body
-//     let disaster
+boardController.post("/search-boards", async function (req, res) {
+    const query = req.body
+    let boards = await Boards.find({title: query.name}).lean()
 
-//     if (query.name === "") {
-//         disaster = await Disasters.find({ type: { $regex: new RegExp(query.type, "i") } }).lean()
+    if (query.filter === "top") {
+        boards = boards.sort((a, b) => b.upvotes - a.upvotes)
+    } else {
+        boards = boards.sort((a, b) => a.upvotes - b.upvotes)
+    }
 
-//         res.render("search", { disaster, title: "Search" })
-//         return;
-//     }
+    res.json({status: 200, recievedData: boards})
+})
 
-//     disaster = await Disasters.find({ name: { $regex: new RegExp(query.name, "i") }, type: { $regex: new RegExp(query.type, "i") } }).lean()
+boardController.post("/search-comments", async function (req, res) {
+    const query = req.body
+    let boards = await Comment.find({message: query.name}).lean()
 
-//     if (disaster.length < 1) {
-//         disaster = await Disasters.find({ name: { $regex: new RegExp(query.name, "i") } })
-//     }
-
-//     res.render("search", { disaster, title: "Search" })
-// })
+    if (query.filter === "top") {
+        boards = boards.sort((a, b) => b.upvotes - a.upvotes)
+    } else {
+        boards = boards.sort((a, b) => a.upvotes - b.upvotes)
+    }
+    
+    res.json({status: 200, recievedData: boards})
+})
 
 export default boardController

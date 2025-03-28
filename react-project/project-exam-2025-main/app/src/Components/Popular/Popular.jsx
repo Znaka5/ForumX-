@@ -7,7 +7,7 @@ export default function Popular({
   const [comment, setComment] = useState([])
 
   useEffect(() => {
-    fetch("http://localhost:5000/boards/comments")
+    fetch("http://localhost:5000/boards/comment")
       .then(response => response.json())
       .then(data => setComment(data.message))
       .catch(error => console.log(error.message))

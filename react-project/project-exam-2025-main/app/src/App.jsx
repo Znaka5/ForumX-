@@ -18,6 +18,7 @@ import Profile_Edit from './Components/User/Profile-Edit'
 import Edit_Board from './Components/Board/Edit'
 import MyContext from './Components/Context/Context'
 import useLocalStorage from './Components/hooks/localStorage'
+import Comment_edit from './Components/Board/editComment'
 
 function App() {
    const [user, setUser, Logout] = useLocalStorage("user", null);
@@ -163,6 +164,7 @@ function App() {
         <Route path="/users/profile" element={user === null ? <Navigate to="/404" /> : <Profile user={user} />} />
         <Route path="/users/create" element={user === null ? <Navigate to="/404" /> : <Create onCreate={create} />} />
         <Route path="/user/:id/edit-profile" element={!user ? <Navigate to="/404" /> : <Profile_Edit onEdit={editProfile} error={err} show={errorClose} type={type} />} />
+        <Route path="/boards/:id/edit-comment" element={!user ? <Navigate to="/404" /> : <Comment_edit error={err} user={user} navigate={navigator} />} />
         <Route path="/boards/about" element={<About />} />
         <Route path="/boards" element={<Boards />} />
         <Route path="/boards/popular/boards" element={<Popular_Boards />} />

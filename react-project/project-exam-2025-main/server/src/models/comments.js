@@ -9,6 +9,16 @@ const commentSchema = new Schema({
         type: String,
         required: true,
     },
+    likes: {
+        type: Number,
+        required: true,
+    },
+    liked: [
+        {
+            type: Types.ObjectId,
+            ref: 'users'
+        }
+    ],
     owner: {
         type: String,
     },
