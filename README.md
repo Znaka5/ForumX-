@@ -33,7 +33,7 @@ because coding is my passion
 - with profile functionality
 - ability to change password/pfp/name/email
 - if creators of a comment/board can edit and delete it
-- 
+
 <---------------------------------------------------->
 
 3. Basic functionality (available for both guests and users)
