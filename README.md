@@ -17,3 +17,9 @@ and so I thought to use "X" as in maths it is an undefined variable
 I've always wanted to make a forum and now that an opportunity arose
 I'm motivated to continue development even after this react course
 because coding is my passion
+
+<---------------------------------------------------->
+
+### Functionality
+
+##1. loged out (guests)
