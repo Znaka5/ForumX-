@@ -20,6 +20,6 @@ because coding is my passion
 
 <---------------------------------------------------->
 
-### Functionality
+### FUNCTIONALITY
 
-##1. loged out (guests)
+1. loged out (guests)
