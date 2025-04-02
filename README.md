@@ -23,3 +23,22 @@ because coding is my passion
 ### FUNCTIONALITY
 
 1. loged out (guests)
+- Can access boards without commenting/liking or creating any board
+- no profile functionality
+
+<---------------------------------------------------->
+
+2. loged in (users)
+- Can access boards with commenting/liking and creating boards
+- with profile functionality
+- ability to change password/pfp/name/email
+- if creators of a comment/board can edit and delete it
+- 
+<---------------------------------------------------->
+
+3. Basic functionality (available for both guests and users)
+- searching through the boards
+- random board and details for each board
+- comments showing
+- popular boards alongside including popular comments
+- about us page
